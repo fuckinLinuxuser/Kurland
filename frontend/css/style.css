@@ -1,0 +1,13 @@
+body {
+    padding-top: 70px;
+    background-color: #fff8f0;
+    font-family: "Arial", sans-serif;
+}
+
+h1, h2 {
+    color: #b36b00;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
