@@ -1,3 +1,9 @@
+"scripts": {
+  "build:css": "cleancss -o dist/css/style.min.css css/style.css",
+  "build:js": "terser js/scripts.js -o dist/js/script.min.js",
+  "build": "npm run build:css && npm run build:js" 
+}
+
 {
   "name": "frontend",
   "version": "1.0.0",
@@ -9,5 +15,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.44.1"
+  }
 }
