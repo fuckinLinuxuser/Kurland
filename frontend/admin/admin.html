@@ -32,6 +32,7 @@
   const root = document.getElementById('root');
   const status = document.getElementById('status');
 
+  // ---- ЗАГРУЗКА МЕНЮ ----
   async function load() {
     root.innerHTML = 'Загрузка...';
     try {
@@ -39,58 +40,87 @@
       const data = await r.json();
       render(data);
     } catch (err) {
+      console.error(err);
       root.innerHTML = '<p>Ошибка загрузки: ' + err.message + '</p>';
     }
   }
 
+  // ---- ОТРИСОВКА ----
   function render(menu) {
     root.innerHTML = '';
+
     menu.categories.forEach(cat => {
       const c = document.createElement('div');
       c.className = 'cat';
+
       const h = document.createElement('h3');
       h.textContent = cat.name;
       c.appendChild(h);
+
       cat.items.forEach(it => {
         const row = document.createElement('div');
         row.className = 'item';
-        row.innerHTML = <div><strong>${it.name}</strong> <span class="small">(${it.id})</span></div>;
+
+        // Левая часть — название
+        row.innerHTML = `
+          <div>
+            <strong>${it.name}</strong>
+            <span class="small">(${it.id})</span>
+          </div>
+        `;
+
+        // Правая часть — чекбокс + цена
         const right = document.createElement('div');
-        right.innerHTML = <label><input type="checkbox" data-id="${it.id}" ${it.available ? 'checked' : ''}/> доступна</label> &nbsp; <input type="text" data-price="${it.id}" value="${it.price}" />;
+        right.innerHTML = `
+          <label>
+            <input type="checkbox" data-id="${it.id}" ${it.available ? "checked" : ""}/> доступна
+          </label>
+          &nbsp;
+          <input type="text" data-price="${it.id}" value="${it.price}" />
+        `;
+
         row.appendChild(right);
         c.appendChild(row);
       });
+
       root.appendChild(c);
     });
+
     status.textContent = 'Обновлено: ' + (menu.last_updated || '—');
   }
 
+  // ---- СОХРАНЕНИЕ ----
   async function save() {
-    // собираем обновления: id + available + price
     const updates = [];
+
     document.querySelectorAll('input[type="checkbox"][data-id]').forEach(ch => {
       const id = ch.getAttribute('data-id');
       const available = ch.checked;
       const priceInput = document.querySelector(`input[data-price="${id}"]`);
-      const price = priceInput ? Number(priceInput.value) || 0 : undefined;
+
+      const price = priceInput ? Number(priceInput.value) : 0;
+
       updates.push({ id, available, price });
     });
 
-    // POST с Basic Auth — браузер покажет запрос на логин если не авторизован
     try {
       const resp = await fetch('/api/update', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ updates, editor: 'web-admin' })
       });
+
       const json = await resp.json();
+
       if (json.ok) {
         status.textContent = 'Сохранено: ' + (json.last_updated || new Date().toISOString());
         await load();
       } else {
         status.textContent = 'Ошибка: ' + (json.error || JSON.stringify(json));
       }
+
     } catch (err) {
+      console.error(err);
       status.textContent = 'Ошибка сохранения: ' + err.message;
     }
   }
