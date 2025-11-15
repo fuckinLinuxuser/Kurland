@@ -106,5 +106,5 @@ app.get('/', basicAuth, (req, res) => {
 
 // --- Start
 app.listen(PORT, () => {
-  console.log(`Admin server listening on http://localhost:${PORT}`);
+  console.log(`Admin server listening on http://10.0.0.234:${PORT}`);
 });
