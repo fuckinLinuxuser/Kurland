@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Курляндский — Админ</title>
+<style>
+  body{font-family:system-ui,Arial;margin:20px;color:#111}
+  h1{margin:0 0 1rem}
+  .cat{margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid #eee}
+  .item{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0}
+  .controls{margin-top:1rem}
+  button{padding:.5rem 1rem;margin-right:.5rem}
+  .small{font-size:.9rem;color:#666}
+  input[type="text"]{width:6rem}
+</style>
+</head>
+<body>
+  <h1>Админ: Меню</h1>
+  <p class="small">Отключайте позиции, которые сегодня недоступны. Сохранение обновляет файл на сервере.</p>
+
+  <div id="root">Загрузка...</div>
+
+  <div class="controls">
+    <button id="saveBtn">Сохранить</button>
+    <button id="reloadBtn">Перезагрузить</button>
+    <span id="status" class="small"></span>
+  </div>
+
+<script>
+(async function(){
+  const root = document.getElementById('root');
+  const status = document.getElementById('status');
+
+  async function load() {
+    root.innerHTML = 'Загрузка...';
+    try {
+      const r = await fetch('/api/menu');
+      const data = await r.json();
+      render(data);
+    } catch (err) {
+      root.innerHTML = '<p>Ошибка загрузки: ' + err.message + '</p>';
+    }
+  }
+
+  function render(menu) {
+    root.innerHTML = '';
+    menu.categories.forEach(cat => {
+      const c = document.createElement('div');
+      c.className = 'cat';
+      const h = document.createElement('h3');
+      h.textContent = cat.name;
+      c.appendChild(h);
+      cat.items.forEach(it => {
+        const row = document.createElement('div');
+        row.className = 'item';
+        row.innerHTML = <div><strong>${it.name}</strong> <span class="small">(${it.id})</span></div>;
+        const right = document.createElement('div');
+        right.innerHTML = <label><input type="checkbox" data-id="${it.id}" ${it.available ? 'checked' : ''}/> доступна</label> &nbsp; <input type="text" data-price="${it.id}" value="${it.price}" />;
+        row.appendChild(right);
+        c.appendChild(row);
+      });
+      root.appendChild(c);
+    });
+    status.textContent = 'Обновлено: ' + (menu.last_updated || '—');
+  }
+
+  async function save() {
+    // собираем обновления: id + available + price
+    const updates = [];
+    document.querySelectorAll('input[type="checkbox"][data-id]').forEach(ch => {
+      const id = ch.getAttribute('data-id');
+      const available = ch.checked;
+      const priceInput = document.querySelector(`input[data-price="${id}"]`);
+      const price = priceInput ? Number(priceInput.value) || 0 : undefined;
+      updates.push({ id, available, price });
+    });
+
+    // POST с Basic Auth — браузер покажет запрос на логин если не авторизован
+    try {
+      const resp = await fetch('/api/update', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ updates, editor: 'web-admin' })
+      });
+      const json = await resp.json();
+      if (json.ok) {
+        status.textContent = 'Сохранено: ' + (json.last_updated || new Date().toISOString());
+        await load();
+      } else {
+        status.textContent = 'Ошибка: ' + (json.error || JSON.stringify(json));
+      }
+    } catch (err) {
+      status.textContent = 'Ошибка сохранения: ' + err.message;
+    }
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', save);
+  document.getElementById('reloadBtn').addEventListener('click', load);
+
+  await load();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+    "last_updated": "2025-11-15T09:00:00+03:00",
+    "currency": "RUB",
+    "categories": [
+      {
+        "name": "Супы",
+        "items": [
+          { "id": "s1", "name": "Борщ домашний", "price": 250, "available": true },
+          { "id": "s2", "name": "Куриный суп", "price": 200, "available": true }
+        ]
+      },
+      {
+        "name": "Горячее",
+        "items": [
+          { "id": "g1", "name": "Котлета по-киевски", "price": 320, "available": true },
+          { "id": "g2", "name": "Пельмени с говядиной", "price": 290, "available": true }
+        ]
+      },
+      {
+        "name": "Гарниры",
+        "items": [
+          { "id": "gr1", "name": "Гречка с грибами", "price": 150, "available": true },
+          { "id": "gr2", "name": "Картофельное пюре", "price": 120, "available": true }
+        ]
+      },
+      {
+        "name": "Десерты и напитки",
+        "items": [
+          { "id": "d1", "name": "Чизкейк домашний", "price": 220, "available": true },
+          { "id": "d2", "name": "Компот из сухофруктов", "price": 90, "available": true }
+        ]
+      }
+    ]
+  }
