@@ -8,24 +8,20 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: nginx
     volumes:
       - ./frontend:/usr/share/nginx/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8080:80"
     depends_on:
+      - admin  
       - backend
+    container_name: nginx
 
   admin:
-    image: node:18-alpine
-    container_name: admin
+    build: ./frontend/admin
     ports:
-      - "8082:8082"
+      - "8081:8081"
     depends_on:
       - backend
-    volumes:
-      - ./frontend/admin:/app
-    working_dir: /app
-    command: ["./ip_search.sh"]
-
+    container_name: admin
