@@ -21,7 +21,7 @@ services:
   admin:
     build: ./frontend/admin
     ports:
-      - "8081:8081"
+      - "8082:8082"
     depends_on:
       - backend
     container_name: admin
