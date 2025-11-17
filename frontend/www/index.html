@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курляндский Дворик</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="header">
+        <div class="container header__inner">
+            <div class="logo">
+                <img src="images/logo.png" alt="Курляндский Дворик">
+                <span>Курляндский Дворик</span>
+            </div>
+
+            <nav class="nav">
+                <ul>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#gallery">Галерея</a></li>
+                    <li><a href="#banquets">Банкеты</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- ===================== О НАС ===================== -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>О нас</h2>
+            <p>
+                Здесь будет текст о кафе — его атмосфере, кухне, уникальности.
+                Позже ты будешь получать этот текст из JSON от админки.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ===================== ПРЕИМУЩЕСТВА ===================== -->
+    <section id="advantages" class="section section--light">
+        <div class="container">
+            <h2>Почему мы</h2>
+
+            <div class="cards">
+                <div class="card">Вкусная кухня</div>
+                <div class="card">Уютная атмосфера</div>
+                <div class="card">Доступные цены</div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ===================== JSON-ТАБЛИЦА (Dynamic) ===================== -->
+    <section id="dynamic-table" class="menu-section">
+        <h2>Меню</h2>
+        <div id="menu-table"></div>
+    </section>
+
+    <script src="table.js"></script>
+
+
+    <!-- ===================== СЛАЙДЕР ===================== -->
+    <section id="gallery" class="section section--light">
+        <div class="container">
+            <h2>Галерея</h2>
+
+            <div class="slider">
+                <div class="slide"><img src="" alt=""></div>
+                <div class="slide"><img src="" alt=""></div>
+                <div class="slide"><img src="" alt=""></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===================== БАНКЕТЫ ===================== -->
+    <section id="banquets" class="section">
+        <div class="container">
+            <h2>Банкеты</h2>
+
+            <p>
+                Здесь будет информация о банкетах, условиях бронирования,
+                а также кнопка для отправки заявки.
+            </p>
+
+            <button class="btn">Оставить заявку</button>
+        </div>
+    </section>
+
+
+    <!-- ===================== КОНТАКТЫ ===================== -->
+    <section id="contacts" class="section section--light">
+        <div class="container">
+            <h2>Контакты</h2>
+
+            <div class="contact-info">
+                <p>📍 Адрес: г. Санкт-Петербург, Старопетргофский проспект, д. 19</p>
+                <p>📞 Телефон: +7 (999) 999-99-99</p>
+                <p>⏰ Время работы: 08:00 - 21:00</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="container">
+            <p>© Курляндский Дворик, 2025</p>
+        </div>
+    </footer>
+
+
+  <!-- <script src="script.js"></script> -->
+</body>
+</html>
