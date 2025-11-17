@@ -19,7 +19,7 @@ services:
     container_name: nginx
 
   admin:
-    build: ./frontend/admin
+    build: ./frontend
     ports:
       - "8082:8082"
     depends_on:
