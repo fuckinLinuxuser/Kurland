@@ -1,159 +1,121 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Новинки — Курляндский дворик</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-  <link rel="apple-touch-icon" href="images/favicon.png">
-  <meta name="theme-color" content="#ffffff">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    header {
-      text-align: center;
-      padding: 40px 0;
-      background: #ffffff;
-    }
-    header .logo {
-    width: 120px;
-    height: auto;
-    margin-bottom: 10px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }на
-    .intro {
-      text-align: center;
-      margin: 20px 0 40px;
-      font-size: 1.2em;
-      color: #555;
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-    .menu-item {
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-    }
-    .menu-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .menu-item .content {
-      padding: 20px;
-      flex: 1;
-    }
-    .menu-item .content h3 {
-      margin: 0 0 10px;
-      font-size: 1.5em;
-    }
-    .menu-item .content p {
-      margin: 0 0 15px;
-      color: #666;
-    }
-    .menu-item .content .tagline {
-      font-style: italic;
-      color: #999;
-      font-size: 0.9em;
-    }
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      background: #fff;
-      margin-top: 60px;
-      color: #777;
-      font-size: 0.9em;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курляндский Дворик</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<div class="container">
-  <header>
-    <img src="images/logo.png" alt="Логотип Курляндского Дворика" class="logo">
-    <h1>Новинки меню</h1>
-  </header>
-  <div class="intro">
-    Добро пожаловать в обновлённый уголок вкуса — вот что нового в меню Курляндского дворика.
-  </div>
+    <!-- ===================== HEADER ===================== -->
+    <header class="header">
+        <div class="container header__inner">
+            <div class="logo">
+                <img src="images/logo.png" alt="Курляндский Дворик">
+                <span>Курляндский Дворик</span>
+            </div>
 
-  <div class="menu-grid">
-    <!-- Блюдо 1 -->
-    <div class="menu-item">
-      <img src="images/forel.jpeg" alt="Летняя форель с соусом из клюквы и шалфея">
-      <div class="content">
-        <h3>Летняя форель с соусом из клюквы и шалфея</h3>
-        <p>Сочное филе форели в винном соусе с клюквой, подача на деревянной дощечке.</p>
-        <div class="tagline">Свежий сезонный вкус — ограниченно.</div>
-      </div>
-    </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#gallery">Галерея</a></li>
+                    <li><a href="#banquets">Банкеты</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <!-- Блюдо 2 -->
-    <div class="menu-item">
-      <img src="images/blines.jpeg" alt="Блины с лисичками и карпаччо из утки">
-      <div class="content">
-        <h3>Блины с лисичками и карпаччо из утки</h3>
-        <p>Аромат грибов, тончайшие ломтики утки и хрустящий лук – нетривиальное прочтение классики.</p>
-        <div class="tagline">Эксперимент вкуса.</div>
-      </div>
-    </div>
 
-    <!-- Блюдо 3 -->
-    <div class="menu-item">
-      <img src="images/drink.jpeg" alt="Домашний лимонад ручной работы — три вкуса">
-      <div class="content">
-        <h3>Домашний лимонад ручной работы — три вкуса</h3>
-        <p>Лаванда-мед, малина-земляника и классика лимон-мята. Без консервантов, свежий напиток.</p>
-        <div class="tagline">Освежи себя.</div>
-      </div>
-    </div>
+    <!-- ===================== О НАС ===================== -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>О нас</h2>
+            <p>
+                Здесь будет текст о кафе — его атмосфере, кухне, уникальности.
+                Позже ты будешь получать этот текст из JSON от админки.
+            </p>
+        </div>
+    </section>
 
-    <!-- Блюдо 4 -->
-    <div class="menu-item">
-      <img src="images/rizzotto.jpeg" alt="Ризотто с трюфелем и осенним ассорти">
-      <div class="content">
-        <h3>Ризотто с трюфелем и осенним ассорти</h3>
-        <p>Кремовое ризотто, свежий трюфель, микс грибов — ранняя осень уже рядом.</p>
-        <div class="tagline">Настроение сезона.</div>
-      </div>
-    </div>
 
-    <!-- Блюдо 5 -->
-    <div class="menu-item">
-      <img src="images/cake.jpeg" alt="Торт-суфле с фисташкой и маракуйей">
-      <div class="content">
-        <h3>Торт-суфле с фисташкой и маракуйей</h3>
-        <p>Лёгкий, воздушный десерт-аккорд, завершающий трапезу приятным акцентом.</p>
-        <div class="tagline">Для сладкого финала.</div>
-      </div>
-    </div>
+    <!-- ===================== ПРЕИМУЩЕСТВА ===================== -->
+    <section id="advantages" class="section section--light">
+        <div class="container">
+            <h2>Почему мы</h2>
 
-  </div> <!-- /.menu-grid -->
+            <div class="cards">
+                <div class="card">Вкусная кухня</div>
+                <div class="card">Уютная атмосфера</div>
+                <div class="card">Доступные цены</div>
+            </div>
 
-  <footer>
-    Мы ждём вас в «Курляндском дворике». Пока меню обновляется — остаётся неизменным одно: наше желание сделать каждый визит особенным.
-  </footer>
+        </div>
+    </section>
 
-</div> <!-- /.container -->
 
+    <!-- ===================== JSON-ТАБЛИЦА (Dynamic) ===================== -->
+    <section id="dynamic-table" class="menu-section">
+        <h2>Меню</h2>
+        <div id="menu-table"></div>
+    </section>
+
+    <script src="table.js"></script>
+
+
+    <!-- ===================== СЛАЙДЕР ===================== -->
+    <section id="gallery" class="section section--light">
+        <div class="container">
+            <h2>Галерея</h2>
+
+            <div class="slider">
+                <div class="slide"><img src="" alt=""></div>
+                <div class="slide"><img src="" alt=""></div>
+                <div class="slide"><img src="" alt=""></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===================== БАНКЕТЫ ===================== -->
+    <section id="banquets" class="section">
+        <div class="container">
+            <h2>Банкеты</h2>
+
+            <p>
+                Здесь будет информация о банкетах, условиях бронирования,
+                а также кнопка для отправки заявки.
+            </p>
+
+            <button class="btn">Оставить заявку</button>
+        </div>
+    </section>
+
+
+    <!-- ===================== КОНТАКТЫ ===================== -->
+    <section id="contacts" class="section section--light">
+        <div class="container">
+            <h2>Контакты</h2>
+
+            <div class="contact-info">
+                <p>📍 Адрес: г. Санкт-Петербург, Старопетргофский проспект, д. 19</p>
+                <p>📞 Телефон: +7 (999) 999-99-99</p>
+                <p>⏰ Время работы: 08:00 - 21:00</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="container">
+            <p>© Курляндский Дворик, 2025</p>
+        </div>
+    </footer>
+
+
+  <!-- <script src="script.js"></script> -->
 </body>
 </html>
