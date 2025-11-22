@@ -1,5 +1,8 @@
 from flask import Flask, request, jsonify
+import json
+import os
 import smtplib
+from datatime import datatime
 from email.mime.text import MIMEText
 
 app = Flask(__name__)
@@ -9,6 +12,8 @@ SMTP_PORT = 587
 SMTP_USER = "your_email@example.com"
 SMTP_PASSWORD = "password"
 TO_EMAIL = "restaurant@example.com"
+MENU_PATH = "menu.json"
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -35,6 +40,24 @@ def submit():
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/api/update', methods=['POST'])
+def update_menu():
+    try:
+	data = reguest.get_json()
+
+	if not data or 'updates' not in data:
+	    return jsonify({"ok": False, "error": "invalid payload"}), 400
+
+	updates = data['updates']
+
+#                  ЧИТАЕМ МЕНЮ
+	if not os.path.exists(MENU_PATH):
+	    return jsonify({"ok": False, "error": "menu.json not found"}), 500
+
+	with open(MENU_PATH, 'r', encoding='utf-8') as f:
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
