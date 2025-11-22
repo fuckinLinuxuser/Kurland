@@ -35,7 +35,7 @@
   // ---- ЗАГРУЗКА МЕНЮ ----
   async function load() {
     root.innerHTML = 'Загрузка...';
-    try {
+	    try {
       const r = await fetch('/api/menu');
       const data = await r.json();
       render(data);
