@@ -1,5 +1,5 @@
 console.log("table.js loaeddddddd");
-fetch('/api/menu')
+fetch("menu.json")
   .then(res => res.json())
   .then(data => renderMenu(data.categories))
   .catch(err => console.error(err));
@@ -37,4 +37,4 @@ function renderMenu(categories) {
     catDiv.appendChild(table);
     container.appendChild(catDiv);
   });
-}
+}              
