@@ -1,5 +1,5 @@
 console.log("table.js loaeddddddd");
-fetch("menu.json")
+fetch("/api/menu")
   .then(res => res.json())
   .then(data => renderMenu(data.categories))
   .catch(err => console.error(err));

@@ -6,10 +6,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 8081;
+const PORT = process.env.PORT || 8082;
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'changeme';
-const DATA_FILE = path.join(__dirname, 'data', 'menu.json');
+const DATA_FILE = path.join(__dirname, 'menu.json');
 
 const app = express();
 app.use(cors()); // разрешаем публичному сайту делать fetch

@@ -1,40 +1,59 @@
-from flask import Flask, request, jsonify
-import smtplib
-from email.mime.text import MIMEText
+from flask import Flask, request, jsonify, send_file
+import os
+import json
 
 app = Flask(__name__)
 
-SMTP_SERVER = "smtp.example.com"  # твой SMTP сервер
-SMTP_PORT = 587
-SMTP_USER = "your_email@example.com"
-SMTP_PASSWORD = "password"
-TO_EMAIL = "restaurant@example.com"
+MENU_FILE = os.path.join(os.path.dirname(__file__), "menu.json")
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    data = request.form
-    body = f"""
-    Новая заявка на банкет:
-    Имя: {data.get('name')}
-    Телефон: {data.get('phone')}
-    Дата: {data.get('date')}
-    Кол-во гостей: {data.get('guests')}
-    Комментарий: {data.get('comment')}
-    """
-    msg = MIMEText(body)
-    msg['Subject'] = "Заявка с сайта Курляндский дворик"
-    msg['From'] = SMTP_USER
-    msg['To'] = TO_EMAIL
+def load_menu():
+    if not os.path.exists(MENU_FILE):
+        return {"items": []}
 
+    with open(MENU_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_menu(menu):
+    with open(MENU_FILE, "w", encoding="utf-8") as f:
+        json.dump(menu, f, ensure_ascii=False, indent=2)
+
+#               API
+
+@app.route("/api/menu", methods=["GET"])
+def get_menu():
+    """Возвращает меню"""
+    data = load_menu()
+    return jsonify(data)
+
+@app.route("/api/menu", methods=["PUT"])
+def update_menu():
+    """Обновляет меню"""
     try:
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
-        server.login(SMTP_USER, SMTP_PASSWORD)
-        server.sendmail(SMTP_USER, TO_EMAIL, msg.as_string())
-        server.quit()
-        return jsonify({"status": "success"}), 200
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+        new_data = request.get_json(force=True)
+    except Exception:
+        return jsonify({"status": "error"}), 400
+
+    save_menu(new_data)
+    return jsonify({"status": "ok"})
+
+@app.route("/api/menu", methods=["POST"])
+def create_menu():
+    """Создает меню"""
+    try:
+        new_data = request.get_json(force=True)
+    except Exception:
+        return jsonify({"status": "error"}), 400
+
+    save_menu(new_data)
+    return jsonify({"status": "ok"})
+
+#                 СТАТИКА 
+@app.route("/admin")
+def admin_page():
+    """Возвращает страницу администратора"""
+    return send_file("src/admin/admin.html")
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

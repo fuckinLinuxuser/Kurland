@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админка меню</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 6px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Редактирование меню</h2>
+
+<div id="categories"></div>
+
+<button onclick="saveMenu()">Сохранить изменения</button>
+
+<script>
+let menuData = null;
+
+async function loadMenu() {
+    const res = await fetch("/api/menu");
+    menuData = await res.json();
+
+    const container = document.getElementById("categories");
+    container.innerHTML = "";
+
+    menuData.categories.forEach((category, catIndex) => {
+        const title = document.createElement("h3");
+        title.innerText = category.name;
+        container.appendChild(title);
+
+        const table = document.createElement("table");
+        table.dataset.index = catIndex;
+
+        // Header
+        const head = table.insertRow();
+        ["id", "name", "price", "available"].forEach(col => {
+            const th = document.createElement("th");
+            th.innerText = col;
+            head.appendChild(th);
+        });
+
+        // Items
+        category.items.forEach(item => {
+            const row = table.insertRow();
+
+            Object.keys(item).forEach(key => {
+                const cell = row.insertCell();
+                cell.contentEditable = key !== "available";
+                
+                if (key === "available") {
+                    cell.innerHTML = `<input type="checkbox" ${item[key] ? 'checked' : ''}>`;
+                } else {
+                    cell.innerText = item[key];
+                }
+            });
+        });
+
+        container.appendChild(table);
+    });
+}
+
+
+async function saveMenu() {
+    const container = document.getElementById("categories");
+    const tables = container.getElementsByTagName("table");
+
+    let newCategories = [];
+
+    for (let table of tables) {
+        let catIndex = Number(table.dataset.index);
+        let category = menuData.categories[catIndex];
+
+        let rows = table.rows;
+        let items = [];
+
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].cells;
+
+            items.push({
+                id: cells[0].innerText,
+                name: cells[1].innerText,
+                price: Number(cells[2].innerText),
+                available: cells[3].querySelector("input").checked
+            });
+        }
+
+        newCategories.push({
+            name: category.name,
+            items: items
+        });
+    }
+
+    const body = {
+        last_updated: new Date().toISOString(),
+        currency: menuData.currency,
+        categories: newCategories
+    };
+
+    await fetch("/api/menu", {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(body)
+    });
+
+    alert("Изменения сохранены!");
+}
+
+loadMenu();
+</script>
+
+</body>
+</html>
