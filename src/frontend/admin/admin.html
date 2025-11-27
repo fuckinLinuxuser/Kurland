@@ -13,17 +13,41 @@
         h3 {
             margin-top: 30px;
         }
+        #new-item {
+            margin-bottom: 30px;
+        }
+        #new-item label {
+            margin-right: 10px;
+        }
+        #new-item input, #new-item select {
+            margin-right: 20px;
+        }
     </style>
 </head>
 <body>
-<h2>Редактирование меню</h2>
-<div id="categories"></div>
+    <h2>Добавить новое блюдо</h2>
+    <div id="new-item">
+        <label>Категория: </label>
+        <select id="new-item-category"></select>
+        <label>Название: </label>
+        <input type="text" id="new-item-name">
+        <label>Цена: </label>
+        <input type="number" id="new-item-price">
+        <label>
+            <input type="checkbox" id="new-item-available" checked> Доступно
+        </label>
+        <button onclick="addNewItem()">Добавить</button>
+    </div>
 
-<button onclick="saveMenu()">Сохранить изменения</button>
+    <h2>Редактирование меню</h2>
+    <div id="categories"></div>
+
+    <button onclick="saveMenu()">Сохранить изменения</button>
 
 <script>
 let menuData = null;
 
+// Загрузка меню и рендер
 async function loadMenu() {
     const res = await fetch("/api/menu");
     menuData = await res.json();
@@ -56,9 +80,7 @@ async function loadMenu() {
                 cell.contentEditable = key !== "available";
 
                 if (key === "available") {
-                    cell.innerHTML = `
-                        <input type="checkbox" ${item[key] ? "checked" : ""}>
-                    `;
+                    cell.innerHTML = `<input type="checkbox" ${item[key] ? "checked" : ""}>`;
                 } else {
                     cell.innerText = item[key];
                 }
@@ -67,11 +89,12 @@ async function loadMenu() {
 
         container.appendChild(table);
     });
+
+    populateCategorySelect();
 }
 
-
+// Сохранение изменений меню
 async function saveMenu() {
-    console.log("items raw:", categories);
     const container = document.getElementById("categories");
     const tables = container.getElementsByTagName("table");
 
@@ -116,6 +139,63 @@ async function saveMenu() {
     alert("Изменения сохранены!");
 }
 
+// Добавление нового блюда
+function addNewItem() {
+    const categoryName = document.getElementById("new-item-category").value;
+    const name = document.getElementById("new-item-name").value.trim();
+    const price = Number(document.getElementById("new-item-price").value);
+    const available = document.getElementById("new-item-available").checked;
+
+    if (!name || !price) {
+        alert("Заполни название и цену");
+        return;
+    }
+
+    const payload = {
+        category: categoryName,
+        name: name,
+        price: price,
+        available: available
+    };
+
+    fetch("/api/menu/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Блюдо добавлено");
+            return fetch("/api/menu");
+        } else {
+            throw new Error("Ошибка добавления блюда");
+        }
+    })
+    .then(res => res.json())
+    .then(newMenu => {
+        menuData = newMenu;
+        loadMenu(); // перерендер таблицы
+        document.getElementById("new-item-name").value = "";
+        document.getElementById("new-item-price").value = "";
+        document.getElementById("new-item-available").checked = true;
+    })
+    .catch(err => console.error(err));
+}
+
+// Заполнение select категорий
+function populateCategorySelect() {
+    const select = document.getElementById("new-item-category");
+    select.innerHTML = "";
+    menuData.categories.forEach(cat => {
+        const opt = document.createElement("option");
+        opt.value = cat.name;
+        opt.textContent = cat.name;
+        select.appendChild(opt);
+    });
+}
+
+// Инициализация
 loadMenu();
 </script>
 </body>
