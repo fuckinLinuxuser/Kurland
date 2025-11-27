@@ -48,11 +48,22 @@ def create_menu():
     save_menu(new_data)
     return jsonify({"status": "ok"})
 
+@app.route("/api/menu/add", methods=["POST"])
+def add_menu_item():
+    """Добавляет блюдо в меню"""
+    try:
+        new_data = request.get_json(force=True)
+    except Exception:
+        return jsonify({"status": "error"}), 400
+
+    save_menu(new_data)
+    return jsonify({"status": "ok"})
+
 #                 СТАТИКА 
 @app.route("/admin")
 def admin_page():
     """Возвращает страницу администратора"""
-    return send_file("src/admin/admin.html")
+    return send_file("src/frontend/admin/admin.html")
     
 
 if __name__ == "__main__":

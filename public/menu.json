@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-11-15T13:03:24.645Z",
+  "last_updated": "2025-11-27T09:19:18.591Z",
   "currency": "RUB",
   "categories": [
     {
@@ -8,14 +8,14 @@
         {
           "id": "s1",
           "name": "Борщ домашний",
-          "price": 95,
+          "price": 1,
           "available": true
         },
         {
           "id": "s2",
           "name": "Куриный суп",
-          "price": 95,
-          "available": true
+          "price": 3,
+          "available": false
         }
       ]
     },
@@ -26,7 +26,7 @@
           "id": "g1",
           "name": "Котлета по-киевски",
           "price": 180,
-          "available": true
+          "available": false
         },
         {
           "id": "g2",
@@ -60,7 +60,7 @@
           "id": "d1",
           "name": "Чизкейк домашний",
           "price": 220,
-          "available": true
+          "available": false
         },
         {
           "id": "d2",

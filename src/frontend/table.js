@@ -26,6 +26,7 @@ function renderMenu(categories) {
     table.appendChild(header);
 
     cat.items.forEach(item => {
+      if (!item.available) return;
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${item.name}</td>
