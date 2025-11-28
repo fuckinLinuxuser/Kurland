@@ -2,7 +2,6 @@ console.log("table.js loaeddddddd");
 fetch("/api/menu")
   .then(res => res.json())
   .then(data => renderMenu(data.categories))
-  .catch(err => console.error(err));
 
 function renderMenu(categories) {
   const container = document.getElementById("menu-table");
