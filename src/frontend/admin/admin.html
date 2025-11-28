@@ -22,9 +22,36 @@
         #new-item input, #new-item select {
             margin-right: 20px;
         }
+        body {
+        #login-box {
+            margin-top: 80px;
+            text-align: center;
+        }
+        
+        #admin-content {
+            display: none;
+        }
+
+        input {
+            padding: 6px;
+            margin: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 6px 16px;
+        }
     </style>
 </head>
 <body>
+    <div id="login-box">
+        <h2>Вход</h2>
+        <input type="text" id="username" placeholder="Имя пользователя">
+        <input type="password" id="password" placeholder="Пароль">
+        <button onclick="login()">Войти</button>
+    </div>
+
+    <div id="admin-content">
+        
     <h2>Добавить новое блюдо</h2>
     <div id="new-item">
         <label>Категория: </label>
@@ -197,6 +224,22 @@ function populateCategorySelect() {
 
 // Инициализация
 loadMenu();
+</script>
+<script>
+    const LOGIN = "admin";
+    const PASSWORD = "1111";
+    
+    function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        
+        if (username === LOGIN && password === PASSWORD) {
+            document.getElementById("login-box").style.display = "none";
+            document.getElementById("admin-content").style.display = "block";
+        } else {
+            alert("Неверный логин или пароль");
+        }
+    }
 </script>
 </body>
 </html>

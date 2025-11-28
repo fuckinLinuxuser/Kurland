@@ -206,7 +206,7 @@ footer {
   }
   
   .menu-table th, .menu-table td {
-    border: 1px solid #792a08cc;
+    border: 1px solid #c1846acc;
     padding: 8px;
   }
   
@@ -217,4 +217,26 @@ footer {
   
   .menu-table tr:nth-child(even) {
     background-color: #ffffff;
+  }
+  .menu-table th, 
+  .menu-table td {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+  }
+  
+  /* фиксируем ширины колонок */
+  .menu-table th:first-child,
+  .menu-table td:first-child {
+      width: 70%;           /* колонка с названием */
+  }
+  
+  .menu-table th:last-child,
+  .menu-table td:last-child {
+      width: 30%;           /* колонка с ценой */
+      text-align: right;    /* цена справа — красиво и понятно */
+  }
+  
+  /* для эстетики */
+  .menu-table tr:nth-child(even) {
+      background: #f8f8f8;
   }

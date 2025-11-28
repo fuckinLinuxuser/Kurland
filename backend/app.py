@@ -6,6 +6,9 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+USERS = {
+    "admin": "1111"
+}
 # путь к menu.json
 MENU_FILE = os.path.join(os.path.dirname(__file__), "menu.json")
 
