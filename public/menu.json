@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-11-28T06:45:53.181472Z",
+  "last_updated": "2025-11-28T13:28:18.490731Z",
   "currency": "RUB",
   "categories": [
     {
@@ -9,16 +9,16 @@
           "id": "s1",
           "name": "Борщ домашний",
           "price": 1,
-          "available": false
+          "available": true
         },
         {
           "id": "s2",
           "name": "Куриный суп",
           "price": 3,
-          "available": false
+          "available": true
         },
         {
-          "id": "f2f3885b",
+          "id": "s3",
           "name": "абоба",
           "price": 100,
           "available": true
